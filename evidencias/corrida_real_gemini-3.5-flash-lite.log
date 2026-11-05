@@ -1,0 +1,67 @@
+01:29:38 | INFO     | __main__ | Rate limit activo: 12.0 requests/min. Los textos se lanzan en paralelo, pero las llamadas al modelo se espacian; la corrida completa puede tardar uno o dos minutos.
+01:29:39 | INFO     | chain | Procesando texto (386 caracteres)
+01:29:39 | INFO     | chain | Procesando texto (229 caracteres)
+01:29:39 | INFO     | chain | Procesando texto (377 caracteres)
+01:29:39 | INFO     | chain | Procesando texto (181 caracteres)
+01:29:51 | INFO     | chain | Validación OK (finish_reason=STOP, tecnologias=6)
+01:29:51 | INFO     | chain | Extracción completada en 12.46s (criticidad=alta)
+01:29:55 | INFO     | chain | Validación OK (finish_reason=STOP, tecnologias=2)
+01:29:55 | INFO     | chain | Extracción completada en 16.27s (criticidad=baja)
+01:30:00 | INFO     | chain | Validación OK (finish_reason=STOP, tecnologias=9)
+01:30:00 | INFO     | chain | Extracción completada en 21.23s (criticidad=media)
+01:30:01 | INFO     | chain | Validación OK (finish_reason=STOP, tecnologias=0)
+01:30:01 | WARNING  | chain | El texto no nombra ninguna tecnología concreta
+01:30:01 | ERROR    | chain | Extracción fallida tras 22.00s: SinTecnologiasError: el texto no nombra ninguna tecnología concreta
+01:30:01 | INFO     | chain | Procesando texto (386 caracteres)
+01:30:11 | WARNING  | chain | Respuesta truncada por límite de tokens (finish_reason=MAX_TOKENS)
+01:30:11 | WARNING  | chain | Intento fallido (TruncatedOutputError: respuesta truncada por límite de tokens: MAX_TOKENS) -> no reintentable
+01:30:11 | ERROR    | chain | Extracción fallida tras 9.64s: TruncatedOutputError: respuesta truncada por límite de tokens: MAX_TOKENS
+
+=== Log crítico ===
+{
+  "tecnologias": [
+    "FastAPI",
+    "SQLAlchemy",
+    "PostgreSQL",
+    "RDS",
+    "Redis",
+    "Kubernetes"
+  ],
+  "nivel_de_criticidad": "alta",
+  "resumen_tecnico": "Se registra una saturación en el pool de conexiones de SQLAlchemy hacia PostgreSQL en RDS, provocando un error de timeout y fallas masivas en el endpoint de checkout. Como consecuencia, Kubernetes ha reiniciado múltiples pods debido al fallo en las sondas de vivencia."
+}
+
+=== Advertencia menor ===
+{
+  "tecnologias": [
+    "Python",
+    "Pandas"
+  ],
+  "nivel_de_criticidad": "baja",
+  "resumen_tecnico": "El job nocturno finalizó con éxito utilizando Python, pero emitió una advertencia de obsolescencia debido al uso de un método deprecado en Pandas."
+}
+
+=== Arquitectura con degradación ===
+{
+  "tecnologias": [
+    "Go",
+    "Node.js",
+    "Kubernetes",
+    "Amazon EKS",
+    "Apache Kafka",
+    "PostgreSQL",
+    "Elasticsearch",
+    "Next.js",
+    "GraphQL"
+  ],
+  "nivel_de_criticidad": "media",
+  "resumen_tecnico": "Se registra una degradación significativa en el tiempo de respuesta del motor de búsqueda tras la última implementación, elevando la latencia promedio a 4 segundos sin generar errores explícitos."
+}
+
+=== Ambiguo (prueba de estrés) ===
+OK -> rechazado como se esperaba: el texto no nombra ninguna tecnología concreta
+
+=== Truncamiento forzado (max_tokens=16) ===
+OK -> truncamiento detectado y no reintentado: respuesta truncada por límite de tokens: MAX_TOKENS
+
+Resumen: 4/4 textos con el resultado esperado.
