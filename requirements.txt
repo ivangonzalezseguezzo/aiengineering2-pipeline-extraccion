@@ -1,0 +1,6 @@
+langchain-core>=1.7
+langchain-google-genai>=4.4
+langchain-openai>=1.7
+langchain-anthropic>=1.7
+pydantic>=2.7
+python-dotenv>=1.0
